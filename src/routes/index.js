@@ -1,19 +1,17 @@
 import React from 'react'
-import { 
-  BrowserRouter as Router,
-  Switch,
-  Route 
-} from 'react-router-dom'
-import AppContainer from '../containers/AppContainer'
+import { BrowserRouter as Router, Route} from 'react-router-dom'
+import { Header } from 'components'
+import { AppContainer } from 'containers'
 
-export default function Routes () {
+function Routes () {
   return (
-    <Router>
-      <React.Fragment>
-        <Switch>
-          <Route path='/' component={AppContainer} exact />
-        </Switch>
-      </React.Fragment>
-    </Router>
+      <Router>
+        <div>
+          <Header />
+          <Route path='/' component={AppContainer} />
+        </div>
+      </Router>
   )
 }
+
+export default Routes

@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import placeholder from './placeholder'
+import { reducer as geolocation } from 'react-redux-geolocation'
+import newsReducer from './news'
 
 const rootReducer = combineReducers({
-  placeholder
+  geolocation,
+  news: newsReducer
 })
 
 export default rootReducer
