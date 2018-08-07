@@ -9,8 +9,6 @@
   },
   "dependencies": {
     "@material-ui/core": "^1.4.2",
-    "antd": "^3.8.0",
-    "axios": "^0.18.0",
     "leaflet": "^1.3.3",
     "primereact": "^2.0.0-beta.1",
     "react": "^16.4.2",
@@ -26,16 +24,13 @@
     "redux-thunk": "^2.3.0",
     "remote": "^0.2.6",
     "remote-redux-devtools": "^0.5.12",
-    "remotedev-server": "^0.2.4",
-    "styled-components": "^3.4.1",
-    "uws": "^99.0.0"
+    "styled-components": "^3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "remotedev": "remotedev --hostname=localhost --port=8000"
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "redux-immutable-state-invariant": "^2.1.0"
