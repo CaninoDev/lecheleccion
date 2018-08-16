@@ -1,31 +1,25 @@
 import React, { Component } from 'react'
 
-import { NewsCollection } from 'components'
+import { NewUserDialog } from 'components'
 
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { fetchNews } from '../actions/news'
-
+import { fetchUser } from '../actions/users';
 class AppContainer extends Component {
-  componentDidMount() {
-    this.props.fetchNews()
-  }
-
   render () {
+    const { user, fetchUser } = this.props
     return (
-      <div>
-      <br />
-        <NewsCollection news={this.props.news} />
-      </div>
+      <React.Fragment>
+        {(user.length > 0) ? <NewsCollection /> : <NewUserDialog submitUser={this.props.fetchUser} open={true} /> }
+        
+      </React.Fragment>
     )
   }
 }
 
 function mapStateToProps (state) {
-  return ({news: state.news.collection})
+  return ({
+    user: state.user.user
+  })
 }
-function mapDispatchToProps(dispatch) {
-  return ({fetchNews: fetchNews})
-  // return bindActionCreators( NewsActions, dispatch)
-}
-export default connect(mapStateToProps, { fetchNews })(AppContainer)
+
+export default connect(mapStateToProps, { fetchUser })(AppContainer)
