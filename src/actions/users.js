@@ -1,26 +1,51 @@
 import fetch from 'isomorphic-fetch'
-import { 
-  USER_REQUEST, USER_SUCCESS, USER_FAILURE 
+
+import {
+  USER_REQUEST, USER_SUCCESS, USER_FAILURE,
+  USERSLIST_REQUEST, USERSLIST_SUCCESS, USERSLIST_FAILURE
 } from '../constants'
 
-export const requestUser = name => ({
-  type: USER_REQUEST,
-  name
+const requestUser = () => ({
+  type: USER_REQUEST
 })
 
-export const receiveUser = data => ({
+const receiveUser = user => ({
   type: USER_SUCCESS,
-  payload: data,
-  loggedIn: true
+  payload: user
+})
+
+const requestUsers = () => ({
+  type: USERSLIST_REQUEST
+})
+
+const receiveUsers = list => ({
+  type: USERSLIST_SUCCESS,
+  payload: list
 })
 
 export const fetchUser = name => dispatch => {
-  dispatch(requestUser(name))
+  dispatch(requestUser())
   return fetch('/api/users', {
     method: 'POST',
-    body: name
-  })
-  .then(response => response.json())
-  .then(data => dispatch(receiveUser(data)))
-  .catch(error => dispatch({type: USER_FAILURE}))
+    body: JSON.stringify({name: name}),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(response => response.json())
+    .then(user => { dispatch(receiveUser(user)) })
+    .catch(error => dispatch({ type: USER_FAILURE, error }))
+}
+
+export const fetchUsersList = () => async dispatch => {
+  dispatch(requestUsers())
+  try {
+    const response = await fetch(`/api/users`, {
+      method: 'GET'
+    })
+    const userList = await response.json()
+    console.dir(userList)
+    dispatch(receiveUsers(userList))
+  } catch (error) {
+    dispatch({ type: USERSLIST_FAILURE, error })
+  }
 }
