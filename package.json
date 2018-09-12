@@ -1,30 +1,51 @@
 {
   "name": "lecheleccion",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "private": true,
   "proxy": {
     "/api": {
       "target": "http://localhost:3001"
+    },
+    "/cors": {
+      "target": "http://localhost:8080"
     }
   },
   "dependencies": {
     "@material-ui/core": "^1.4.2",
+    "@material-ui/icons": "^2.0.2",
+    "animate.css": "^3.7.0",
+    "cors-anywhere": "^0.4.1",
+    "d3-format": "^1.3.2",
+    "express": "^4.16.3",
+    "http-proxy": "^1.17.0",
     "leaflet": "^1.3.3",
+    "material-ui-search-bar": "^1.0.0-beta.9",
     "primereact": "^2.0.0-beta.1",
     "react": "^16.4.2",
+    "react-animated-transitions": "^0.0.6",
+    "react-clamp-lines": "^1.1.0",
     "react-dom": "^16.4.2",
-    "react-leaflet": "^2.0.0",
+    "react-modal": "^3.5.1",
     "react-redux": "^5.0.7",
     "react-redux-geolocation": "^1.0.14",
+    "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4",
+    "react-scripts": "1.1.5",
+    "react-sizeme": "^2.5.2",
+    "react-stack-grid": "^0.7.1",
+    "react-transition-group": "^2.4.0",
+    "react-ui-cards": "^1.4.0",
+    "react-vis": "^1.11.1",
+    "recharts": "^1.1.0",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "remote": "^0.2.6",
     "remote-redux-devtools": "^0.5.12",
-    "styled-components": "^3.4.1"
+    "standard": "^11.0.1",
+    "styled-components": "^3.4.1",
+    "xmlhttprequest": "^1.8.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,6 +54,12 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.0.0-rc.1",
+    "babel-eslint": "^8.2.6",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "redux-immutable-state-invariant": "^2.1.0"
+  },
+  "standard": {
+    "parser": "babel-eslint"
   }
 }
