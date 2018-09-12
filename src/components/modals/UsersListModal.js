@@ -28,7 +28,7 @@ class UsersListModal extends Component {
     if (errorMessage) {
       console.log(errorMessage)
     } else {
-      if (!isLoading && !errorMessage) {
+      if (!isLoading && !errorMessage && users !== null) {
         listing = users.map(user =>
           <ListItem button onClick={() => this.handleClick(user.name)} key={user.id}>
             <ListItemAvatar>
@@ -66,8 +66,8 @@ class UsersListModal extends Component {
 }
 
 const mapStateToProps = state => ({
-  users: state.users.usersList,
-  isLoading: state.loading,
-  errorMessage: state.errorMessage
+  users: state.users.accounts,
+  isLoading: state.users.loading,
+  errorMessage: state.users.errorMessage
 })
 export default connect(mapStateToProps, { fetchUsersList, fetchUser })(UsersListModal)
