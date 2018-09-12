@@ -10,36 +10,45 @@ class ChartsContainer extends Component {
     if (user) {
       fetchUserBias(user.id)
     }
-
     fetchArticlesBias()
   }
   render () {
-    const { user_bias, articles_bias } = this.props
-    let renderCharts = (function () {
-      let buffer = []
-      if (user_bias.loading === false && user_bias.data.bias !== undefined) {
-        buffer.push(<BiasChart data={user_bias.data.bias} key='user' />)
+    const { userBias, articlesBias } = this.props
+
+    const data = [
+      {
+        'type': 'libertarian',
+        'articles': articlesBias.libertarian,
+        'user': userBias.libertarian
+      },
+      {
+        'type': 'libertarian',
+        'articles': articlesBias.libertarian,
+        'user': userBias.libertarian
+      }, {
+        'type': 'green',
+        'articles': articlesBias.green,
+        'user': userBias.green
+      }, {
+        'type': 'liberal',
+        'articles': articlesBias.liberal,
+        'user': userBias.liberal
+      }, {
+        'type': 'conservative',
+        'articles': articlesBias.conservative,
+        'user': userBias.conservative
       }
-
-      if (articles_bias.loading === false && articles_bias.data !== undefined) {
-        buffer.push(<BiasChart data={articles_bias.data} key='articles' />)
-      }
-
-      return buffer
-    })()
-
+    ]
     return (
-      <Grid item xs={9}>
-        {renderCharts}
-      </Grid>
+      <BiasChart data={data} />
     )
   }
 }
 
 const mapStateToProps = state => ({
   user: state.users.currentUser,
-  articles_bias: state.articles_bias,
-  user_bias: state.user_bias
+  articlesBias: state.articles_bias,
+  userBias: state.user_bias
 
 })
 

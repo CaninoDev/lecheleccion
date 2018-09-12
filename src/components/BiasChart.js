@@ -1,43 +1,65 @@
-import React, { Component } from 'react'
-import '../../node_modules/react-vis/dist/style.css'
-import { RadarChart } from 'react-vis'
-import { format } from 'd3-format'
+import { render } from 'react-dom'
+import { ResponsiveRadar } from '@nivo/radar'
 
-const DOMAIN = [
-  {name: 'libertarian', domain: [0, 1], getValue: d => d.libertarian, tickFormat: t => t},
-  {name: 'green', domain: [0, 1], getValue: d => d.green},
-  {name: 'liberal', domain: [0, 1], getValue: d => d.liberal},
-  {name: 'conservative', domain: [0, 1], getValue: d => d.conservative}
-]
-
-const basicFormat = format('.2r')
-const wideFormat = format('.3r')
-class BiasChart extends Component {
-  state = {
-    data: [{
-      libertarian: this.props.data.libertarian,
-      green: this.props.data.green,
-      liberal: this.props.data.liberal,
-      conservative: this.props.data.conservative
-    }]
-  }
-  render () {
-    console.log('BiasChart' + this.props.data)
-    const { data } = this.state
-    console.log(data)
-    return (
-      <div className='centered-and-flexed'>
-        <RadarChart
-          animation
-          data={data}
-          domains={DOMAIN}
-          tickFormat={t => wideFormat(t)}
-          width={400}
-          height={300}
-        />
-      </div>
-    )
-  }
-}
-
-export default BiasChart
+// make sure parent container have a defined height when using responsive component,
+// otherwise height will be 0 and no chart will be rendered.
+// website examples showcase many properties, you'll often use just a few of them.
+const BiasChart = ({data}) => (
+      <ResponsiveRadar
+        data={/* see data tab */}
+        keys={[
+            'articles',
+            'user'
+        ]}
+        indexBy='type'
+        maxValue='auto'
+        margin={{
+            'top': 92,
+            'right': 80,
+            'bottom': 40,
+            'left': 80
+        }}
+        curve='catmullRomClosed'
+        borderWidth={1}
+        borderColor='inherit:darker(1.2)'
+        gridLevels={5}
+        gridShape='circular'
+        gridLabelOffset={41}
+        enableDots={true}
+        dotSize={8}
+        dotColor='inherit'
+        dotBorderWidth={0}
+        dotBorderColor='#ffffff'
+        enableDotLabel={true}
+        dotLabel='value'
+        dotLabelYOffset={-12}
+        colors='dark2'
+        colorBy='key'
+        fillOpacity={0.15}
+        animate={true}
+        motionStiffness={35}
+        motionDamping={10}
+        isInteractive={true}
+        legends={[
+            {
+                'anchor': 'top-left',
+                'direction': 'column',
+                'translateX': -50,
+                'translateY': -40,
+                'itemWidth': 80,
+                'itemHeight': 20,
+                'itemTextColor': '#999',
+                'symbolSize': 12,
+                'symbolShape': 'circle',
+                'effects': [
+                    {
+                        'on': 'hover',
+                        'style': {
+                            'itemTextColor': '#000'
+                        }
+                    }
+                ]
+            }
+        ]}
+    />
+)
