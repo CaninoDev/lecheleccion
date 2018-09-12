@@ -18,14 +18,18 @@ export const fetchQueriedNews = query => async (dispatch, getState) => {
       const collection = await response.json()
       dispatch({
         type: NEWS_SUCCESS,
-        payload: collection
+        data: collection
       })
     }
   } catch (error) {
     dispatch({ type: NEWS_FAILURE, error })
   }
 }
-
+/* For offline development */
+// export const fetchNews = () => dispatch => {
+//   dispatch({type: NEWS_REQUEST})
+//   dispatch({type: NEWS_SUCCESS, payload: data})
+// }
 export const fetchNews = () => async dispatch => {
   dispatch({type: NEWS_REQUEST})
   try {
@@ -36,23 +40,13 @@ export const fetchNews = () => async dispatch => {
       const collection = await response.json()
       dispatch({
         type: NEWS_SUCCESS,
-        payload: collection
+        data: collection
       })
     }
   } catch (error) {
     dispatch({
       type: NEWS_FAILURE,
-      errorMessage: error
-    })
-  }
-}
-
-export function handleArticleClick (e) {
-  return (dispatch) => {
-    dispatch({type: 'SENDING_READNOTICE'})
-    return fetch('/api/users/{userID}/articles', {
-      method: 'POST',
-      body: {uuid: e.target.getAttribute('uuid')}
+      error: error
     })
   }
 }

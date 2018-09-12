@@ -1,14 +1,19 @@
 import { combineReducers } from 'redux'
-import { reducer as geolocation } from 'react-redux-geolocation'
 import news from './news'
 import users from './users'
+import votes from './votes'
+import articles_bias from './articles_bias'
+import user_bias from './user_bias'
+
 import { default as modals } from './modals'
 
 const rootReducer = combineReducers({
-  geolocation,
   users,
   news,
-  modals
+  modals,
+  votes,
+  articles_bias,
+  user_bias
 })
 
 export default rootReducer
