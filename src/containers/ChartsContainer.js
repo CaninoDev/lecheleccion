@@ -5,6 +5,10 @@ import { connect } from 'react-redux'
 import { BiasChart } from 'components'
 import Grid from '@material-ui/core/Grid'
 class ChartsContainer extends Component {
+  constructor (props) {
+    super(props)
+
+  }
   componentDidMount () {
     const { fetchUserBias, fetchArticlesBias, user } = this.props
     if (user) {
@@ -15,12 +19,7 @@ class ChartsContainer extends Component {
   render () {
     const { userBias, articlesBias } = this.props
 
-    const data = [
-      {
-        'type': 'libertarian',
-        'articles': articlesBias.libertarian,
-        'user': userBias.libertarian
-      },
+    let data = [
       {
         'type': 'libertarian',
         'articles': articlesBias.libertarian,
@@ -40,7 +39,9 @@ class ChartsContainer extends Component {
       }
     ]
     return (
-      <BiasChart data={data} />
+      <div>
+        <BiasChart data={data} />
+      </div>
     )
   }
 }
@@ -49,7 +50,6 @@ const mapStateToProps = state => ({
   user: state.users.currentUser,
   articlesBias: state.articles_bias,
   userBias: state.user_bias
-
 })
 
 export default connect(mapStateToProps, { fetchUserBias, fetchArticlesBias })(ChartsContainer)
