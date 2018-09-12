@@ -1,8 +1,5 @@
-export { default as TopBar } from './TopBar'
 export { default as NewsCard } from './NewsCard'
 export { default as SearchBar } from './SearchBar'
 export { default as NewsHeader } from './NewsHeader'
 export { default as ErrorPage } from './ErrorPage'
-export { default as Greeting } from './Greeting'
-export { default as ChipGroup } from './ChipGroup'
 export { default as BiasChart } from './BiasChart'

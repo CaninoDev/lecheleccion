@@ -1,21 +1,13 @@
 import React from 'react'
-import AppBar from '@material-ui/core/AppBar'
-import IconButton from '@material-ui/core/IconButton'
-import Toolbar from '@material-ui/core/Toolbar'
-import AccountCircle from '../assets/github_svg_icon'
+import Typography from '@material-ui/core/Typography'
 
-function Header () {
+const NewsHeader = () => {
   return (
-    <AppBar position="static">
-      <Toolbar variant="dense">
-        <div>
-          <IconButton>
-            <AccountCircle />
-          </IconButton>
-        </div>
-      </Toolbar>
-    </AppBar>
+    <React.Fragment>
+      <Typography variane='headline' gutterBottom> Today's Top Headlines </Typography>
+      <Typography variane='captions' gutterBottom> News From Around the Web </Typography>
+    </React.Fragment>
   )
 }
 
-export default Header
+export default NewsHeader

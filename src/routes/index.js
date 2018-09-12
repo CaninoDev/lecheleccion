@@ -5,12 +5,11 @@ import { AppContainer } from 'containers'
 
 function Routes () {
   return (
-      <Router>
-        <div>
-          <Header />
-          <Route path='/' component={AppContainer} />
-        </div>
-      </Router>
+    <Router>
+      <div>
+        <Route path='/' component={AppContainer} />
+      </div>
+    </Router>
   )
 }
 
