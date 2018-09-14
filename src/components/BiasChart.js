@@ -1,18 +1,15 @@
 import React from 'react'
 import { ResponsiveRadar } from '@nivo/radar'
 
-const BiasChart = ({data}) => {
+const BiasChart = ({data, keys}) => {
   return (
     <ResponsiveRadar
       data={data}
-      keys={[
-        'articles',
-        'user'
-      ]}
+      keys={keys}
       indexBy='type'
       maxValue='auto'
       margin={{
-        'top': 53,
+        'top': 70,
         'right': 68,
         'bottom': 40,
         'left': 80

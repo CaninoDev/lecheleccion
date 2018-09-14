@@ -7,7 +7,8 @@ import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   chart: {
-    height: 300
+    height: 300,
+    width: 300
   }
 })
 
@@ -43,8 +44,13 @@ class ChartsContainer extends Component {
     super(props)
     this.state = {
       user: this.props.user,
-      ready: false,
-      flagUserLocalBias: false,
+      articlesReady: false,
+      userReady: false,
+      flagUserLocalBias: true,
+      renderKeys: {
+        articles: false,
+        user: false
+      },
       data: [
         {
           'type': 'libertarian'
@@ -76,7 +82,7 @@ class ChartsContainer extends Component {
           draft[index]['user'] = datum[index]
         }
         return {
-          ready: true,
+          userReady: true,
           uBias: uBias,
           data: draft
         }
@@ -92,7 +98,7 @@ class ChartsContainer extends Component {
           draft[index]['articles'] = datum[draft[index]['type']]
         }
         return {
-          ready: true,
+          articlesReady: true,
           aBias: aBias,
           data: draft
         }
@@ -102,11 +108,14 @@ class ChartsContainer extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (this.state.flagUserLocalBias) {
-      if (this.props.user) {
-        this.props.fetchUserBias()
+    let test = 2
+    const { flagUserLocalBias } = this.state
+    const { fetchUserBias } = this.props
+    if (flagUserLocalBias) {
+      if (prevProps.user.id !== prevState.user.id) {
+        fetchUserBias(prevProps.user.id)
         this.setState({
-          flagUserLocalBias: true
+          flagUserLocalBias: false
         })
       }
     }
@@ -116,13 +125,26 @@ class ChartsContainer extends Component {
     this.props.fetchArticlesBias()
   }
 
+  chartLegend () {
+    const { renderKeys, articlesReady, userReady } = this.state
+    let keys = Object.keys(renderKeys)
+
+    if (articlesReady) {
+      renderKeys['articles'] = true
+    }
+    if (userReady) {
+      renderKeys['user'] = true
+    }
+    renderKeys.filter((key) => (renderKeys[key]))
+  }
+
   render () {
     const { classes } = this.props
-    const { ready, data } = this.state
-
+    const { data } = this.state
+    let keys = this.chartLegend()
     return (
       <div className={classes.chart}>
-        {ready && <BiasChart data={data} />}
+        {this.chartLegend && <BiasChart data={data} keys={keys} />}
       </div>
     )
   }
