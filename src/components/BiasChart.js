@@ -12,7 +12,7 @@ const BiasChart = ({data, keys}) => {
         'top': 70,
         'right': 68,
         'bottom': 40,
-        'left': 80
+        'left': 60
       }}
       curve='catmullRomClosed'
       borderWidth={2}
