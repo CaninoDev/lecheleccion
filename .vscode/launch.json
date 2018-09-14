@@ -6,6 +6,7 @@
     "request": "launch",
     "url": "http://localhost:3000",
     "webRoot": "${workspaceRoot}/src",
+    "breakOnLoad": true,
     "sourceMapPathOverrides": {
       "webpack:///src/*": "${webRoot}/*"
     }

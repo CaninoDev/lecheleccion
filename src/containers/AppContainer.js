@@ -53,12 +53,6 @@ class AppContainer extends Component {
     }, 'newuser')
   }
 
-  toggleMainWindow = name => event => {
-    this.setState({
-      [name]: event.target.checked
-    })
-  }
-
   render () {
     const { classes } = this.props
 

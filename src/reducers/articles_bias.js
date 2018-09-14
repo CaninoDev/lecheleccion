@@ -5,7 +5,7 @@ const initialState = {
   data: {}
 }
 
-export default function articles_bias (state = initialState, action) {
+export default function articlesBias (state = initialState, action) {
   switch (action.type) {
     case BIAS_ARTICLES_REQUEST:
       return { ...state, loading: true }
