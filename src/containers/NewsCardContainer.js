@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { showModal, hideModal } from '../actions/modals'
 import { connect } from 'react-redux'
 import { postVote } from '../actions/votes'
+import { updateBiasState } from '../actions/biases'
 import { NewsCard } from 'components'
 
 class NewsCardContainer extends Component {
@@ -22,8 +23,9 @@ class NewsCardContainer extends Component {
     this.props.hideModal()
     const userID = this.props.user.id
     const articleID = this.props.articleData.id
-    const { postVote } = this.props
+    const { postVote, updateBiasState } = this.props
     postVote(articleID, userID, vote)
+    updateBiasState(userID)
   }
   openArticleModal = e => {
     const { showModal, articleData } = this.props
@@ -63,7 +65,8 @@ const mapDispatchToProps = dispatch => ({
       modalType
     }))
   },
-  postVote: (articleID, userID, vote) => dispatch(postVote(articleID, userID, vote))
+  postVote: (articleID, userID, vote) => dispatch(postVote(articleID, userID, vote)),
+  updateBiasState: (userId) => dispatch(updateBiasState(userId))
 })
 
 const mapStateToProps = state => ({

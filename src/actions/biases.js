@@ -71,3 +71,8 @@ export const fetchUserBias = userID => async dispatch => {
     dispatch(errorUserBias(error))
   }
 }
+
+export const updateBiasState = userID => dispatch => {
+  dispatch(fetchUserBias(userID))
+  dispatch(fetchArticlesBias)
+}

@@ -5,7 +5,7 @@ const initialState = {
   data: {}
 }
 
-export default function user_bias (state = initialState, action) {
+export default function userBias (state = initialState, action) {
   switch (action.type) {
     case BIAS_USER_REQUEST:
       return { ...state, loading: true }

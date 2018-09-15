@@ -1,43 +1,62 @@
-import React, { Component } from 'react'
-import '../../node_modules/react-vis/dist/style.css'
-import { RadarChart } from 'react-vis'
-import { format } from 'd3-format'
+import React from 'react'
+import { ResponsiveRadar } from '@nivo/radar'
 
-const DOMAIN = [
-  {name: 'libertarian', domain: [0, 1], getValue: d => d.libertarian, tickFormat: t => t},
-  {name: 'green', domain: [0, 1], getValue: d => d.green},
-  {name: 'liberal', domain: [0, 1], getValue: d => d.liberal},
-  {name: 'conservative', domain: [0, 1], getValue: d => d.conservative}
-]
-
-const basicFormat = format('.2r')
-const wideFormat = format('.3r')
-class BiasChart extends Component {
-  state = {
-    data: [{
-      libertarian: this.props.data.libertarian,
-      green: this.props.data.green,
-      liberal: this.props.data.liberal,
-      conservative: this.props.data.conservative
-    }]
-  }
-  render () {
-    console.log('BiasChart' + this.props.data)
-    const { data } = this.state
-    console.log(data)
-    return (
-      <div className='centered-and-flexed'>
-        <RadarChart
-          animation
-          data={data}
-          domains={DOMAIN}
-          tickFormat={t => wideFormat(t)}
-          width={400}
-          height={300}
-        />
-      </div>
-    )
-  }
+const BiasChart = ({data, keys}) => {
+  return (
+    <ResponsiveRadar
+      data={data}
+      keys={keys}
+      indexBy='type'
+      maxValue='auto'
+      margin={{
+        'top': 70,
+        'right': 68,
+        'bottom': 40,
+        'left': 60
+      }}
+      curve='catmullRomClosed'
+      borderWidth={2}
+      borderColor='inherit'
+      gridLevels={3}
+      gridShape='circular'
+      gridLabelOffset={24}
+      enableDots={false}
+      dotSize={8}
+      dotColor='inherit'
+      dotBorderWidth={0}
+      dotBorderColor='#ffffff'
+      enableDotLabel
+      dotLabel='index'
+      dotLabelYOffset={-20}
+      colors='nivo'
+      colorBy='key'
+      fillOpacity={0.1}
+      animate
+      motionStiffness={90}
+      motionDamping={15}
+      isInteractive
+      legends={[
+        {
+          'anchor': 'top-left',
+          'direction': 'column',
+          'translateX': -50,
+          'translateY': -40,
+          'itemWidth': 80,
+          'itemHeight': 20,
+          'itemTextColor': '#999',
+          'symbolSize': 12,
+          'symbolShape': 'circle',
+          'effects': [
+            {
+              'on': 'hover',
+              'style': {
+                'itemTextColor': '#000'
+              }
+            }
+          ]
+        }
+      ]}
+    />
+  )
 }
-
 export default BiasChart

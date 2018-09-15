@@ -4,9 +4,6 @@ import { connect } from 'react-redux'
 import { NewsContainer, ChartsContainer, HeaderContainer, ModalContainer } from 'containers'
 import { withStyles } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
-import Switch from '@material-ui/core/Switch'
-import Assessment from '@material-ui/icons/Assessment'
-import ViewModule from '@material-ui/icons/ViewModule'
 
 const styles = themes => ({
   container: {
@@ -17,6 +14,7 @@ const styles = themes => ({
 
   header: {
     alignItems: 'center',
+    alignContents: 'center',
     direction: 'column',
     justify: 'center'
   }
@@ -25,9 +23,7 @@ const styles = themes => ({
 class AppContainer extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      newsWindow: true
-    }
+
     this.closeModal = this.closeModal.bind(this)
     this.openUsersListModal = this.openUsersListModal.bind(this)
     this.openNewUserModal = this.openNewUserModal.bind(this)
@@ -58,22 +54,8 @@ class AppContainer extends Component {
     }, 'newuser')
   }
 
-  toggleMainWindow = name => event => {
-    this.setState({
-      [name]: event.target.checked
-    })
-  }
-
   render () {
     const { classes } = this.props
-    const { newsWindow } = this.state
-    let window = (function () {
-      if (newsWindow) {
-        return <NewsContainer />
-      } else {
-        return <ChartsContainer />
-      }
-    })()
 
     return (
       <React.Fragment>
@@ -81,17 +63,11 @@ class AppContainer extends Component {
           <Grid item xs>
             <Grid container spacing={16} direction='column' className={classes.header}>
               <HeaderContainer />
-              <Switch
-                checked={newsWindow}
-                onChange={this.toggleMainWindow('newsWindow')}
-                icon={<Assessment />}
-                checkedIcon={<ViewModule />}
-                value
-              />
+              <ChartsContainer />
             </Grid>
           </Grid>
           <Grid item xs={9}>
-            {window}
+            <NewsContainer />
           </Grid>
         </Grid>
         <ModalContainer />
