@@ -78,7 +78,7 @@ class ChartsContainer extends Component {
     if (props.uBias !== state.uBias) {
       const { uBias } = props
       if (!isEmptyOrUndefined(uBias)) {
-        let datum = [uBias.libertarian, uBias.green, uBias.liberal, uBias.conservative]
+        let datum = [uBias.conservative, uBias.liberal, uBias.libertarian, uBias.green]
 
         transformValues(datum)
         for (const [index] of draft.entries()) {
