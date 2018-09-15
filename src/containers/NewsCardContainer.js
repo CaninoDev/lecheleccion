@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { postVote } from '../actions/votes'
 import { updateBiasState } from '../actions/biases'
 import { NewsCard } from 'components'
+import { removeCardFromGrid } from '../actions/news'
 
 class NewsCardContainer extends Component {
   constructor (props) {
@@ -23,9 +24,10 @@ class NewsCardContainer extends Component {
     this.props.hideModal()
     const userID = this.props.user.id
     const articleID = this.props.articleData.id
-    const { postVote, updateBiasState } = this.props
+    const { postVote, updateBiasState, removeCardFromGrid } = this.props
     postVote(articleID, userID, vote)
     updateBiasState(userID)
+    removeCardFromGrid(articleID)
   }
   openArticleModal = e => {
     const { showModal, articleData } = this.props
@@ -66,7 +68,8 @@ const mapDispatchToProps = dispatch => ({
     }))
   },
   postVote: (articleID, userID, vote) => dispatch(postVote(articleID, userID, vote)),
-  updateBiasState: (userId) => dispatch(updateBiasState(userId))
+  updateBiasState: (userId) => dispatch(updateBiasState(userId)),
+  removeCardFromGrid: (articleID) => dispatch(removeCardFromGrid(articleID))
 })
 
 const mapStateToProps = state => ({

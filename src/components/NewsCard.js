@@ -8,7 +8,7 @@ import { ButtonBase } from '@material-ui/core'
 
 const styles = theme => ({
   media: {
-    height: '150px',
+    height: '175px',
     width: '100%',
     padding: '5px',
     backgroundSize: 'cover',
@@ -42,7 +42,7 @@ const NewsCard = props => {
         </CardMedia>
         <CardContent>
           <Typography variant='caption'>{jsDate}</Typography>
-          <Typography gutterBottom variant='subheading' component='h2'>{articleData.title}</Typography>
+          <Typography gutterBottom variant='body2' alignLeft>{articleData.title}</Typography>
         </CardContent>
       </Card>
     </ButtonBase>

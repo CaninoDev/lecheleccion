@@ -7,7 +7,9 @@ import Grid from '@material-ui/core/Grid'
 
 class NewsContainer extends Component {
   componentDidMount () {
-    this.props.fetchNews()
+    const { news } = this.props
+    let number = (50 - news.count) || 50
+    this.props.fetchNews(number: number)
   }
   renderComponent = (news, errorMessage, isLoading) => {
     if (errorMessage) {
@@ -16,11 +18,24 @@ class NewsContainer extends Component {
       )
     } else if (!isLoading && !errorMessage) {
       return (
-        <NewsCardsGrid news={news} />
+        <Grid item xs={9}>
+          <NewsCardsGrid news={news} />
+        </Grid>
       )
     } else {
       return (
-        <CircularProgress />
+        <Grid
+          container
+          spacing={0}
+          direction='column'
+          alignItems='center'
+          justify='center'
+          style={{ minHeights: '100vh' }}
+        >
+          <Grid item xs={3}>
+            <CircularProgress />
+          </Grid>
+        </Grid>
       )
     }
   }
@@ -29,9 +44,9 @@ class NewsContainer extends Component {
     const { news, errorMessage, isLoading } = this.props
 
     return (
-      <Grid item xs={9}>
+      <React.Fragment>
         {this.renderComponent(news, errorMessage, isLoading)}
-      </Grid>
+      </React.Fragment>
     )
   }
 }

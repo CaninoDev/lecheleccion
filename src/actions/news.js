@@ -1,39 +1,24 @@
 import fetch from 'isomorphic-fetch'
-import { NEWS_REQUEST, NEWS_SUCCESS, NEWS_FAILURE } from '../constants'
+import { NEWS_REQUEST, NEWS_SUCCESS, NEWS_FAILURE, REMOVING_NEWSCARD, REMOVED_NEWSCARD } from '../constants'
 
-export const fetchQueriedNews = query => async (dispatch, getState) => {
+export const fetchNews = ({query = null, number = 50}) => async (dispatch, getState) => {
   dispatch({type: NEWS_REQUEST})
-  console.log(query)
+  let postingObject = {}
+  if (query) {
+    postingObject['search_term'] = query
+  }
+  if (number) {
+    postingObject['number'] = number
+  }
+
   try {
-    const response = await fetch('/api/articles/search', {
+    const response = await fetch('/api/articles', {
       method: 'POST',
-      body: JSON.stringify({search_term: query}),
+      body: JSON.stringify({articles: postingObject}),
       headers: {
         'Content-Type': 'application/json'
       }
     })
-    if (!response.ok) {
-      throw (await response.json())
-    } else {
-      const collection = await response.json()
-      dispatch({
-        type: NEWS_SUCCESS,
-        data: collection
-      })
-    }
-  } catch (error) {
-    dispatch({ type: NEWS_FAILURE, error })
-  }
-}
-/* For offline development */
-// export const fetchNews = () => dispatch => {
-//   dispatch({type: NEWS_REQUEST})
-//   dispatch({type: NEWS_SUCCESS, payload: data})
-// }
-export const fetchNews = () => async dispatch => {
-  dispatch({type: NEWS_REQUEST})
-  try {
-    const response = await fetch('/api/articles')
     if (!response.ok) {
       throw (await response.json())
     } else {
@@ -49,4 +34,18 @@ export const fetchNews = () => async dispatch => {
       error: error
     })
   }
+}
+/* For offline development */
+// export const fetchNews = () => dispatch => {
+//   dispatch({type: NEWS_REQUEST})
+//   dispatch({type: NEWS_SUCCESS, payload: data})
+// }
+export const removeCardFromGrid = (articleID) => (dispatch, getState) => {
+  dispatch({type: REMOVING_NEWSCARD})
+  const { news } = getState()
+  const newState = news.collection.filter(article => article.id !== articleID)
+  dispatch({
+    type: REMOVED_NEWSCARD,
+    data: newState
+  })
 }
