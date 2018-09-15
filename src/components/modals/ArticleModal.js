@@ -51,7 +51,7 @@ class ArticleModal extends Component {
             >
               <Portal container={this.container}>
                 <DialogContentText position='fixed' variant='headline' gutterBottom>{title}</DialogContentText>
-                <DialogContentText variant='body2'>{body}</DialogContentText>
+                <DialogContentText variant='body4'>{body}</DialogContentText>
               </Portal>
               <CloseIcon />
             </IconButton>

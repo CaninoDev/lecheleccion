@@ -14,6 +14,7 @@ const styles = themes => ({
 
   header: {
     alignItems: 'center',
+    alignContents: 'center',
     direction: 'column',
     justify: 'center'
   }
