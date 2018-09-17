@@ -13,10 +13,12 @@ const styles = themes => ({
   },
 
   header: {
-    alignItems: 'center',
+    alignItems: 'left',
     alignContents: 'center',
     direction: 'column',
-    justify: 'center'
+    position: 'fixed',
+    marginLeft: '50px',
+    spacing: 16
   }
 })
 
@@ -60,8 +62,8 @@ class AppContainer extends Component {
     return (
       <React.Fragment>
         <Grid container className={classes.container}>
-          <Grid item xs>
-            <Grid container spacing={16} direction='column' className={classes.header}>
+          <Grid item xs position='relative'>
+            <Grid container item xs direction='column' className={classes.header}>
               <HeaderContainer />
               <ChartsContainer />
             </Grid>

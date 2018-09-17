@@ -40,6 +40,6 @@ export const postVote = (articleID, userID, vote) => async (dispatch) => {
     }
     dispatch(postedVote())
   } catch (error) {
-    errorVote(error)
+    errorVote(error.error)
   }
 }

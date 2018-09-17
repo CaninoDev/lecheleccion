@@ -9,8 +9,8 @@ const BiasChart = ({data, keys}) => {
       indexBy='type'
       maxValue='auto'
       margin={{
-        'top': 70,
-        'right': 68,
+        'top': 100,
+        'right': 60,
         'bottom': 40,
         'left': 60
       }}

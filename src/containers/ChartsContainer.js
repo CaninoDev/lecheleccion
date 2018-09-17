@@ -8,8 +8,8 @@ import { TransitionGroup } from 'react-transition-group'
 
 const styles = theme => ({
   chart: {
-    height: 250,
-    width: 250
+    height: 300,
+    width: 300
   }
 })
 
@@ -160,7 +160,7 @@ class ChartsContainer extends Component {
 const mapStateToProps = state => ({
   user: state.users.currentUser,
   aBias: state.articlesBias.data,
-  uBias: state.userBias.data.bias
+  uBias: state.userBias.data
 })
 
 export default connect(mapStateToProps, { fetchUserBias, fetchArticlesBias })(withStyles(styles)(ChartsContainer))

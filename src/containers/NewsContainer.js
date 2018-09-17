@@ -9,35 +9,37 @@ class NewsContainer extends Component {
   componentDidMount () {
     this.props.fetchNews()
   }
-  renderComponent = (news, errorMessage, isLoading) => {
-    if (errorMessage) {
-      return (
-        <ErrorPage />
-      )
-    } else if (!isLoading && !errorMessage) {
-      return (
-        <NewsCardsGrid news={news} />
-      )
-    } else {
-      return (
-        <CircularProgress />
-      )
-    }
-  }
-
   render () {
-    const { news, errorMessage, isLoading } = this.props
+    const {news, isLoading, errorMessage} = this.props
+
+    const renderComponent = () => {
+      if (errorMessage !== null) {
+        return (
+          <ErrorPage />
+        )
+      } else if (isLoading === true) {
+        return (
+          <div style={{margin: { top: '100px', left: '300px'}}}>
+            <CircularProgress />
+          </div>
+        )
+      } else if (isLoading === false && errorMessage === null && news) {
+        return (
+          <NewsCardsGrid news={news} />
+        )
+      }
+    }
 
     return (
       <Grid item xs={9}>
-        {this.renderComponent(news, errorMessage, isLoading)}
+        {renderComponent()}
       </Grid>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  news: state.news,
+  news: state.news.data,
   isLoading: state.news.loading,
   errorMessage: state.news.errorMessage
 })

@@ -8,7 +8,7 @@ import { ButtonBase } from '@material-ui/core'
 
 const styles = theme => ({
   media: {
-    height: '150px',
+    height: '175px',
     width: '100%',
     padding: '5px',
     backgroundSize: 'cover',
@@ -20,7 +20,8 @@ const styles = theme => ({
     margin: 0,
     position: 'absolute',
     bottom: 0,
-    left: 0
+    left: 0,
+    background: 'rgba(89, 89, 89, 0.5)'
   },
   headLine: {
     fontFamily: 'Vidaloka'
@@ -33,7 +34,7 @@ const NewsCard = props => {
     <ButtonBase
       onClick={openArticleModal}
     >
-      <Card className={classes.card}>
+      <Card>
         <CardMedia
           image={articleData.urlToImage}
           className={classes.media}
@@ -41,8 +42,8 @@ const NewsCard = props => {
           <p className={classes.cardHeaderTitle}>{articleData.source}</p>
         </CardMedia>
         <CardContent>
-          <Typography variant='caption'>{jsDate}</Typography>
-          <Typography gutterBottom variant='subheading' component='h2'>{articleData.title}</Typography>
+          <Typography variant='caption' gutterBottom>{jsDate}</Typography>
+          <Typography>{articleData.title}</Typography>
         </CardContent>
       </Card>
     </ButtonBase>

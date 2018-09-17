@@ -56,7 +56,7 @@ export const fetchUser = name => async dispatch => {
     const user = await response.json()
     dispatch(receivedUser(user))
   } catch (error) {
-    dispatch(errorUser(error))
+    dispatch(errorUser(error.error))
   }
 }
 
@@ -72,6 +72,6 @@ export const fetchUsersList = () => async dispatch => {
     const userList = await response.json()
     dispatch(receivedUsers(userList))
   } catch (error) {
-    dispatch(errorUsers(error))
+    dispatch(errorUsers(error.error))
   }
 }

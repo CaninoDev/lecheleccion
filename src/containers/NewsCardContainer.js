@@ -2,15 +2,13 @@ import React, { Component } from 'react'
 import { showModal, hideModal } from '../actions/modals'
 import { connect } from 'react-redux'
 import { postVote } from '../actions/votes'
+import { removeNewsCard } from '../actions/news'
 import { updateBiasState } from '../actions/biases'
 import { NewsCard } from 'components'
 
 class NewsCardContainer extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      isRead: false
-    }
     this.closeModal = this.closeModal.bind(this)
     this.openArticleModal = this.openArticleModal.bind(this)
     this.voteAndCloseModal = this.voteAndCloseModal.bind(this)
@@ -19,13 +17,14 @@ class NewsCardContainer extends Component {
   closeModal = () => {
     this.props.hideModal()
   }
-  voteAndCloseModal = (vote) => {
+  voteAndCloseModal = (vote = 0) => {
     this.props.hideModal()
-    const userID = this.props.user.id
+    const userID = this.props.userID
     const articleID = this.props.articleData.id
     const { postVote, updateBiasState } = this.props
     postVote(articleID, userID, vote)
     updateBiasState(userID)
+    removeNewsCard(articleID)
   }
   openArticleModal = e => {
     const { showModal, articleData } = this.props
@@ -34,6 +33,7 @@ class NewsCardContainer extends Component {
       title: articleData.title,
       url: articleData.url,
       body: articleData.body,
+      source: articleData.source,
       voteAndCloseModal: this.voteAndCloseModal
     }, 'article')
     this.setState({
@@ -66,11 +66,12 @@ const mapDispatchToProps = dispatch => ({
     }))
   },
   postVote: (articleID, userID, vote) => dispatch(postVote(articleID, userID, vote)),
-  updateBiasState: (userId) => dispatch(updateBiasState(userId))
+  updateBiasState: (userId) => dispatch(updateBiasState(userId)),
+  removeNewsCard: (articleID) => dispatch(removeNewsCard(articleID))
 })
 
 const mapStateToProps = state => ({
-  user: state.users.currentUser
+  userID: state.users.currentUser.id
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsCardContainer)
