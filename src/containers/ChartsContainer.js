@@ -4,7 +4,6 @@ import { fetchUserBias, fetchArticlesBias } from '../actions/biases'
 import { connect } from 'react-redux'
 import { BiasChart } from 'components'
 import { withStyles } from '@material-ui/core/styles'
-import { TransitionGroup } from 'react-transition-group'
 
 const styles = theme => ({
   chart: {
@@ -18,7 +17,7 @@ const RANGE_2 = [0, 100]
 
 const transformValues = (obj) => {
   for (var k in obj) {
-    obj[k] = parseInt(convertRange(obj[k], RANGE_1, RANGE_2))
+    obj[k] = parseInt(convertRange(obj[k], RANGE_1, RANGE_2), 10)
   }
   return obj[k]
 }
@@ -34,9 +33,9 @@ const isEmptyOrUndefined = (obj) => {
   return true
 }
 
-const copyProperty = (obj1, obj2) => {
-  for (var key in obj1) {
-    obj2[key] = obj1[key]
+const copyStateProperties = (stateObj, obj) => {
+  for (var key in stateObj) {
+    obj[key] = stateObj[key]
   }
 }
 
@@ -45,15 +44,13 @@ class ChartsContainer extends Component {
     super(props)
     this.state = {
       user: this.props.user,
-      articlesReady: false,
-      userReady: false,
       flagUserLocalBias: true,
       renderKeys: {
         articles: false,
         user: false
       },
       uBias: props.uBias,
-      aBais: props.aBias,
+      aBias: props.aBias,
       data: [
         {
           'type': 'conservative'
@@ -73,38 +70,37 @@ class ChartsContainer extends Component {
 
   static getDerivedStateFromProps (props, state) {
     var draft = [...state.data]
+    var draftKeys = {}
     var datum = {}
 
-    if (props.uBias !== state.uBias) {
+    if ((props.uBias !== state.uBias) && !isEmptyOrUndefined(props.uBias)) {
       const { uBias } = props
-      if (!isEmptyOrUndefined(uBias)) {
-        let datum = [uBias.conservative, uBias.liberal, uBias.libertarian, uBias.green]
+      copyStateProperties(uBias, datum)
 
-        transformValues(datum)
-        for (const [index] of draft.entries()) {
-          draft[index]['user'] = datum[index]
-        }
-        return {
-          userReady: true,
-          ready: true,
-          uBias: uBias,
-          data: draft
-        }
+      transformValues(datum)
+      for (const [index] of draft.entries()) {
+        draft[index]['user'] = datum[draft[index]['type']]
+      }
+      copyStateProperties(state.renderKeys, draftKeys)
+      draftKeys.user = true
+      return {
+        renderKeys: draftKeys,
+        data: draft
       }
     }
     if (props.aBias !== state.aBias) {
       const { aBias } = props
       if (!isEmptyOrUndefined(aBias)) {
-        copyProperty(aBias, datum)
+        copyStateProperties(aBias, datum)
 
         transformValues(datum)
         for (const [index] of draft.entries()) {
           draft[index]['articles'] = datum[draft[index]['type']]
         }
+        copyStateProperties(state.renderKeys, draftKeys)
+        draftKeys.articles = true
         return {
-          articlesReady: true,
-          ready: true,
-          aBias: aBias,
+          renderKeys: draftKeys,
           data: draft
         }
       }
@@ -116,7 +112,7 @@ class ChartsContainer extends Component {
     const { flagUserLocalBias } = this.state
     const { fetchUserBias } = this.props
     if (flagUserLocalBias) {
-      if (prevProps.user.id !== prevState.user.id) {
+      if (prevProps.user.id !== undefined) {
         fetchUserBias(prevProps.user.id)
         this.setState({
           flagUserLocalBias: false
@@ -144,8 +140,9 @@ class ChartsContainer extends Component {
 
   render () {
     const { classes } = this.props
-    const { data, ready } = this.state
+    const { data, renderKeys } = this.state
 
+    const ready = Object.keys(renderKeys).some((key) => renderKeys[key] === true)
     if (ready) {
       var keys = this.chartLegend()
     }

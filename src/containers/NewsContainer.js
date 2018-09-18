@@ -19,7 +19,7 @@ class NewsContainer extends Component {
         )
       } else if (isLoading === true) {
         return (
-          <div style={{margin: { top: '100px', left: '300px'}}}>
+          <div style={{ margin: { top: '100px', left: '300px' } }}>
             <CircularProgress />
           </div>
         )
