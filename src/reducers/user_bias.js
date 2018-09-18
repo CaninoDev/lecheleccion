@@ -10,7 +10,7 @@ export default function userBias (state = initialState, action) {
     case BIAS_USER_REQUEST:
       return { ...state, loading: true }
     case BIAS_USER_SUCCESS:
-      return { ...state, loading: false, data: action.data }
+      return { ...state, loading: false, data: action.data.bias }
     case BIAS_USER_FAILURE:
       return { ...state, loading: false, errorMessage: action.error }
     default:

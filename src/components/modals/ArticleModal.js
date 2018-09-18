@@ -8,13 +8,12 @@ import CloseIcon from '@material-ui/icons/Close'
 import ThumbDownAlt from '@material-ui/icons/ThumbDownAlt'
 import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt'
 
+function Transition (props) {
+  return <Fade in={props.isOpen} timeout={1000} {...props} />
+}
 class ArticleModal extends Component {
   render () {
     const { isOpen, title, body, source, voteAndCloseModal } = this.props
-
-    function Transition (props) {
-      return <Fade in={isOpen} timeout={1000} {...props} />
-    }
     return (
       <div>
         <Dialog
