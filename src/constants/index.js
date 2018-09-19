@@ -20,3 +20,5 @@ export const NEWS_FAILURE = 'news/FAILURE'
 export const NEWS_REQUEST = 'news/REQUEST'
 export const SHOW_MODAL = 'modal/SHOW'
 export const HIDE_MODAL = 'modal/HIDE'
+
+export const TOGGLE_RESET = 'news/RESET'

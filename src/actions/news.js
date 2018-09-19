@@ -5,8 +5,9 @@ const requestNews = ({
   type: NEWS_REQUEST
 })
 
-const filteringNews = ({
-  type: FILTERING_NEWS
+const filteringNews = query => ({
+  type: FILTERING_NEWS,
+  data: query
 })
 
 const receivedNews = data => ({
@@ -24,13 +25,12 @@ const failureNews = error => ({
   errorMessage: error
 })
 
-export const fetchQueriedNews = query => async dispatch => {
-  dispatch(requestNews)
-  console.log(`query: ${query}`)
+export const filterNews = query => async (dispatch, getState) => {
+  dispatch(filteringNews(query))
   try {
     const response = await fetch('/api/articles/search', {
       method: 'POST',
-      body: JSON.stringify({search_term: query}),
+      body: JSON.stringify({search_terms: query, number_of_articl: 20}),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -38,8 +38,8 @@ export const fetchQueriedNews = query => async dispatch => {
     if (!response.ok) {
       throw (await response.json())
     } else {
-      const collection = await response.json()
-      dispatch(receivedNews(collection))
+      const data = await response.json()
+      dispatch(filteredNews(data))
     }
   } catch (error) {
     dispatch(failureNews(error.error))
@@ -66,15 +66,7 @@ export const fetchNews = () => async dispatch => {
 }
 
 export const removeNewsCard = articleID => async (dispatch, getState) => {
-  dispatch(filteringNews)
-  let newState = getState().filter((article) => article.id !== articleID)
-  dispatch(filteredNews(newState))
-}
-
-export const filterNewsCard = searchTerm => async (dispatch, getState) => {
-  dispatch(filteringNews)
-  let newState = getState().news.filter(function (newscard) {
-    return newscard.body.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
-  })
-  dispatch(filteredNews(newState))
+  dispatch(requestNews)
+  let newState = getState().news.data.filter((article) => article.id !== articleID)
+  dispatch(receivedNews(newState))
 }

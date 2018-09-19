@@ -21,7 +21,7 @@ class NewsCardContainer extends Component {
     this.props.hideModal()
     const userID = this.props.userID
     const articleID = this.props.articleData.id
-    const { postVote, updateBiasState } = this.props
+    const { postVote, updateBiasState, removeNewsCard } = this.props
     postVote(articleID, userID, vote)
     updateBiasState(userID)
     removeNewsCard(articleID)

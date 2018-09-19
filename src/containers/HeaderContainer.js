@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core'
 import { SearchBar, NewsHeader } from 'components'
-import { filterNewsCard } from '../actions/news'
+import { filterNews } from '../actions/news'
 import Grid from '@material-ui/core/Grid'
 
 const styles = themes => ({
@@ -14,7 +14,7 @@ const styles = themes => ({
 })
 
 const HeaderContainer = props => {
-  const { filterNewsCard, classes } = props
+  const { filterNews, classes } = props
   return (
     <React.Fragment>
       <Grid container direction='column' spacing={16} position='fixed'>
@@ -22,10 +22,10 @@ const HeaderContainer = props => {
           <NewsHeader />
         </Grid>
         <Grid item xs>
-          <SearchBar filterNewsCard={filterNewsCard} />
+          <SearchBar searchNews={filterNews} />
         </Grid>
       </Grid>
     </React.Fragment>
   )
 }
-export default connect(null, { filterNewsCard })(withStyles(styles)(HeaderContainer))
+export default connect(null, { filterNews })(withStyles(styles)(HeaderContainer))
