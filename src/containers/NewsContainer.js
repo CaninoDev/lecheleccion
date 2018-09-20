@@ -5,8 +5,6 @@ import { ErrorPage, NewsCardsGrid } from 'components'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'
 
-var array = require('lodash/array')
-
 class NewsContainer extends Component {
   componentDidMount () {
     this.props.fetchNews()
@@ -33,10 +31,14 @@ class NewsContainer extends Component {
         let collection = news.filter((atomos) => (atomos.body.match(regexp) !== null))
         if (isLoading === false) {
           collection = collection.concat(selectedNews)
+          return (
+            <NewsCardsGrid news={collection} />
+          )
+        } else {
+          return (
+            <NewsCardsGrid news={collection} />
+          )
         }
-        return (
-          <NewsCardsGrid news={collection} />
-        )
       } else if (isLoading === false && errorMessage === null && news && query.length === 0) {
         return (
           <NewsCardsGrid news={news} />

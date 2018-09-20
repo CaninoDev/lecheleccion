@@ -8,6 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import TextField from '@material-ui/core/TextField'
 import { Dialog } from '@material-ui/core'
+import { About } from 'components'
 
 class NewUserModal extends Component {
   state = {
@@ -35,8 +36,7 @@ class NewUserModal extends Component {
           <DialogTitle>Welcome to Lechelección</DialogTitle>
           <DialogContent>
             <DialogContentText>
-          Lechéleción alludes to a Spanish phenomena to incorporate 'leche' (milk) in many of their idioms. Often times, its usage can refer to one meaning as well as its opposite. 'Ser la leche' (Be the Milk) is a popular example of this.
-          This application will present to you an option to search on politiical issues of interest. As you click and read articles of your choice, a rattin.....bBLASBDLAKSL
+              <About />
             </DialogContentText>
             <TextField
               value={name}

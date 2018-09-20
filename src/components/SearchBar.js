@@ -26,7 +26,7 @@ class SearchBar extends Component {
     this.props.searchNews(this.state.searchTerm)
   }
   handleChange = (event) => {
-    if (event.which != 32) {
+    if (event.which !== 32) {
       this.setState({
         value: event.target.value
       })

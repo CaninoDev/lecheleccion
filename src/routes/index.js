@@ -1,13 +1,16 @@
 import React from 'react'
-import { BrowserRouter as Router, Route} from 'react-router-dom'
-import { Header } from 'components'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { AppContainer } from 'containers'
+import { About } from 'components'
 
 function Routes () {
   return (
     <Router>
       <div>
-        <Route path='/' component={AppContainer} />
+        <Switch>
+          <Route path='/' component={AppContainer} />
+          <Route path='/about' component={About} />
+        </Switch>
       </div>
     </Router>
   )

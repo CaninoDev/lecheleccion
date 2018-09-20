@@ -12,6 +12,7 @@ const NewsCardsGrid = props => {
       duration={960}
       gutterWidth={16}
       gutterHeight={16}
+      monitorImagesLoaded
       easing={easings.quartOut}
       appear={helix.appear}
       appeared={helix.appeared}
