@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { AppContainer } from 'containers'
 import { About } from 'components'
 
@@ -10,6 +10,7 @@ function Routes () {
         <Switch>
           <Route path='/' component={AppContainer} />
           <Route path='/about' component={About} />
+          <Redirect from='*' to='/' />
         </Switch>
       </div>
     </Router>
