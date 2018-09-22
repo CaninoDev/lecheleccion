@@ -3,8 +3,9 @@ var host = process.env.HOST || '0.0.0.0'
 // Listen on a specific port via the PORT environment variable
 var port = process.env.PORT || 8080
 
-var cors_proxy = require('cors-anywhere')
-cors_proxy.createServer({
+var corsProxy = require('cors-anywhere')
+
+corsProxy.createServer({
   originWhitelist: [], // Allow all origins
   removeHeaders: ['cookie', 'cookie2']
 }).listen(port, host, function () {

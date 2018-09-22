@@ -14,31 +14,33 @@ class NewsContainer extends Component {
     const {news, isLoading, errorMessage, query, selectedNews} = this.props
     console.log(`query[0]: ${query[0]}, length: ${query.length}`)
 
-    const renderComponent = () => {
+    function renderComponent () {
       if (errorMessage !== null) {
         return (
           <ErrorPage />
         )
       } else if (isLoading === true && query.length < 1) {
         return (
-          <div style={{ margin: { top: '100px', left: '300px' } }}>
+          <div style={{ margin: { top: '400', left: '500px' } }}>
             <CircularProgress />
           </div>
         )
       } else if (query.length > 0) {
+        /* The following regular expression will match all words in whatever order they may appear in a given string */
         const str = query.map((word) => (`(?=.*\\b${word}\\b)`))
         const regexp = new RegExp(`${str.join('')}`, 'gi')
+
+        /* filter the current collection by the query terms */
         let collection = news.filter((atomos) => (atomos.body.match(regexp) !== null))
+
+        /* check to see if the new search query from remote api made it through */
         if (isLoading === false) {
           collection = collection.concat(selectedNews)
-          return (
-            <NewsCardsGrid news={collection} />
-          )
-        } else {
-          return (
-            <NewsCardsGrid news={collection} />
-          )
         }
+
+        return (
+            <NewsCardsGrid news={collection} />
+          )
       } else if (isLoading === false && errorMessage === null && news && query.length === 0) {
         return (
           <NewsCardsGrid news={news} />
@@ -48,7 +50,7 @@ class NewsContainer extends Component {
 
     return (
       <Grid item xs={9}>
-        {renderComponent()}
+        {() => renderComponent}
       </Grid>
     )
   }

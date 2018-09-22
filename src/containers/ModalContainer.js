@@ -22,7 +22,7 @@ class ModalContainer extends Component {
       return { modalIsOpen: nextProps.modalProps.open }
     } else return null
   }
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate (prevProps, prevState, snapshot) {
     if (prevProps.modalProps !== this.props.modalProps) {
       this.setState({modalIsOpen: this.props.modalProps.open})
     }

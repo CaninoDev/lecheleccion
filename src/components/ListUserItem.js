@@ -5,12 +5,11 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemText from '@material-ui/core/ListItemText'
 import PersonIcon from '@material-ui/icons/Person'
 
-
-export default ({ user, handleSelectedUser}) => (
+const ListUserItem = ({user, handleSelectedUser}) => (
   <ListItem
     button
-    onClick={() => handleSelectedUser(user)}
-    key={user}>
+    onClick={() => handleSelectedUser(user.name)}
+    key={user.id}>
     <ListItemAvatar>
       <Avatar>
         <PersonIcon />
@@ -20,3 +19,4 @@ export default ({ user, handleSelectedUser}) => (
   </ListItem>
 )
 
+export default ListUserItem

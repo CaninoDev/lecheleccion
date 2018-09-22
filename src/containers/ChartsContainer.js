@@ -17,7 +17,9 @@ const RANGE_2 = [0, 100]
 
 const transformValues = (obj) => {
   for (var k in obj) {
-    obj[k] = parseInt(convertRange(obj[k], RANGE_1, RANGE_2), 10)
+    if (obj.hasOwnProperty(k)) {
+      obj[k] = parseInt(convertRange(obj[k], RANGE_1, RANGE_2), 10)
+    }
   }
   return obj[k]
 }
@@ -35,7 +37,9 @@ const isEmptyOrUndefined = (obj) => {
 
 const copyStateProperties = (stateObj, obj) => {
   for (var key in stateObj) {
-    obj[key] = stateObj[key]
+    if (stateObj.hasOwnProperty(key)) {
+      obj[key] = stateObj[key]
+    }
   }
 }
 
@@ -108,7 +112,7 @@ class ChartsContainer extends Component {
     return null
   }
 
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate (prevProps, prevState, snapshot) {
     const { flagUserLocalBias } = this.state
     const { fetchUserBias } = this.props
     if (flagUserLocalBias) {

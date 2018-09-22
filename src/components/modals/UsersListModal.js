@@ -6,10 +6,9 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import List from '@material-ui/core/List'
 import { ListItem, ListItemAvatar, Avatar, ListItemText } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import AccountCircle from '@material-ui/icons/AccountCircle'
+import { ListUserItem } from 'components'
 
 class UsersListModal extends Component {
-  state = {}
   componentDidMount () {
     this.props.fetchUsersList()
   }
@@ -30,14 +29,7 @@ class UsersListModal extends Component {
     } else {
       if (!isLoading && !errorMessage && users !== null) {
         listing = users.map(user =>
-          <ListItem button onClick={() => this.handleClick(user.name)} key={user.id}>
-            <ListItemAvatar>
-              <Avatar>
-                <AccountCircle />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={user.name} />
-          </ListItem>
+          <ListUserItem user={user} handleSelectedUser={this.handleClick} />
         )
       }
     }

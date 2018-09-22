@@ -37,7 +37,7 @@ class AppContainer extends Component {
     }
   }
 
-  closeModal = event => {
+  closeModal = () => {
     this.props.hideModal()
   }
 
