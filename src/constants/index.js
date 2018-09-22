@@ -22,3 +22,5 @@ export const SHOW_MODAL = 'modal/SHOW'
 export const HIDE_MODAL = 'modal/HIDE'
 
 export const TOGGLE_RESET = 'news/RESET'
+export const API_WS_ROOT = 'ws://localhost:3001/api/cable'
+
