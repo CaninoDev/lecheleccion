@@ -39,8 +39,8 @@ class NewsContainer extends Component {
         }
 
         return (
-            <NewsCardsGrid news={collection} />
-          )
+          <NewsCardsGrid news={collection} />
+        )
       } else if (isLoading === false && errorMessage === null && news && query.length === 0) {
         return (
           <NewsCardsGrid news={news} />
@@ -50,7 +50,7 @@ class NewsContainer extends Component {
 
     return (
       <Grid item xs={9}>
-        {() => renderComponent}
+        {renderComponent()}
       </Grid>
     )
   }
