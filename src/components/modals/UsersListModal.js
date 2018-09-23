@@ -29,7 +29,7 @@ class UsersListModal extends Component {
     } else {
       if (!isLoading && !errorMessage && users !== null) {
         listing = users.map(user =>
-          <ListUserItem user={user} handleSelectedUser={this.handleClick} />
+          <ListUserItem key={user.id} user={user} handleSelectedUser={this.handleClick} />
         )
       }
     }
