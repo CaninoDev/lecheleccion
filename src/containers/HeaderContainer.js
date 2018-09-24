@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core'
-import { SearchBar, NewsHeader } from 'components'
+import { NewsHeader } from 'components'
 import { filterNews } from '../actions/news'
 import Grid from '@material-ui/core/Grid'
 
@@ -14,7 +14,7 @@ const styles = themes => ({
 })
 
 const HeaderContainer = props => {
-  const { filterNews, classes } = props
+  const { classes } = props
   return (
     <React.Fragment>
       <Grid container direction='column' spacing={16} position='fixed'>

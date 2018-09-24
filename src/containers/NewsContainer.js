@@ -10,7 +10,6 @@ class NewsContainer extends Component {
     super(props)
     this.state = {
       articles: [],
-      connected: false
     }
     this.articlesChannel = null
   }
@@ -30,11 +29,13 @@ class NewsContainer extends Component {
       rejected: () => (
         console.log('Rejected')
       ),
-      received: (data) => (
+      received: (data) => {
+        let oldArray = this.state.articles
+        oldArray.push(data)
         this.setState({
-          articles: [...this.state.articles, data]
+          articles: [...this.state.articles, oldArray]
         })
-      ),
+      },
       poll: () => {
         console.log('POLLED')
         this.articlesChannel.perform('recent', null)
