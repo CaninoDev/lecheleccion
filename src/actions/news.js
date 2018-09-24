@@ -37,10 +37,9 @@ export const filterNews = query => async (dispatch, getState) => {
     })
     if (!response.ok) {
       throw (await response.json())
-    } else {
-      const data = await response.json()
-      dispatch(filteredNews(data))
     }
+    const data = await response.json()
+    dispatch(filteredNews(data))
   } catch (error) {
     dispatch(failureNews(error.error))
   }
@@ -53,12 +52,12 @@ export const filterNews = query => async (dispatch, getState) => {
 export const fetchNews = () => async dispatch => {
   dispatch(requestNews)
   try {
-    const response = await fetch('/api/articles')
+    const response = await fetch('/cable')
     if (!response.ok) {
       throw (await response.json())
     } else {
-      const collection = await response.json()
-      dispatch(receivedNews(collection))
+      const article = await response.json()
+      dispatch(receivedNews(article))
     }
   } catch (error) {
     dispatch(failureNews(error.error))

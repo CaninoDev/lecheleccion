@@ -9,7 +9,7 @@ const ListUserItem = ({user, handleSelectedUser}) => (
   <ListItem
     button
     onClick={() => handleSelectedUser(user.name)}
-    key={user.id}>
+  >
     <ListItemAvatar>
       <Avatar>
         <PersonIcon />
