@@ -1,16 +1,18 @@
 class Article < ApplicationRecord
+
   has_many :votes
   has_many :users, through: :votes
-  after_create :retrieve_bias
 
   has_one :bias, as: :biasable
 
-  attr_accessor :bias_structure
+  attr_accessor :bias_structure, :articles_bias
 
-  Struct.new('ArticleBias', :libertarian, :green, :liberal, :conservative)
+  after_create :retrieve_bias
+
+  @articles_bias = Struct.new(:libertarian, :green, :liberal, :conservative)
 
   def self.averages
-    Struct::ArticleBias.new(
+    @articles_bias.new(
       Article.traverse_association(:bias).average('libertarian'),
       Article.traverse_association(:bias).average('green'),
       Article.traverse_association(:bias).average('liberal'),
