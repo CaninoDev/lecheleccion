@@ -48,7 +48,8 @@
     "remote-redux-devtools": "^0.5.12",
     "standard": "^11.0.1",
     "styled-components": "^3.4.1",
-    "xmlhttprequest": "^1.8.0"
+    "xmlhttprequest": "^1.8.0",
+    "actioncable-modules": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

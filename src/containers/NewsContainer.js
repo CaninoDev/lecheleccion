@@ -1,50 +1,60 @@
 import React, { Component } from 'react'
 import { NewsCardsGrid } from '../components'
-import { ActionCable } from 'react-actioncable-provider'
 import Grid from '@material-ui/core/Grid'
+
+const cable = require('actioncable-modules')
+
 
 class NewsContainer extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      articles: []
+      articles: [],
+      connected: false
     }
+    this.articlesChannel = null
+  }
+
+  createSocket = () => {
+    let socket = cable.createConsumer('http://localhost:3001/api/cable')
+    this.articlesChannel = socket.subscriptions.create({
+      channel: 'ArticlesChannel'
+    }, {
+      connected: () => {
+        console.log('Connected')
+        this.articlesChannel.poll()
+      },
+      disconnected: () => (
+        console.log('Disconnected')
+      ),
+      rejected: () => (
+        console.log('Rejected')
+      ),
+      received: (data) => (
+        this.setState({
+          articles: [...this.state.articles, data]
+        })
+      ),
+      poll: () => {
+        console.log('POLLED')
+        this.articlesChannel.perform('recent', null)
+      }
+    }
+    )
   }
 
   componentDidMount () {
-    this.requestRecentArticles()
+    this.createSocket()
   }
 
-  onReceived = (response) => {
-    console.log(`response.article: ${response.article}`)
-    const { article } = response
-    const { articles } = this.state
-    this.setState({
-      articles: [...articles, article]
-    })
-  }
-
-  requestRecentArticles = () => {
-    this.refs.articlesCable.perform('recent', null)
-  }
-
-  componentDidMount () {
-    this.requestRecentArticles()
-  }
   render () {
     const { articles } = this.state
     return (
       <Grid item xs={9}>
-        <ActionCable
-          channel={{ channel: 'ArticlesChannel' }}
-          onReceived={this.onReceived}
-          ref='articlesCable'
-        />
-        { (articles > 0) && <NewsCardsGrid news={articles} /> }
+        { (articles.length > 0) && <NewsCardsGrid news={articles} /> }
       </Grid>
     )
   }
 }
-
 
 export default NewsContainer
