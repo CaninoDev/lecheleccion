@@ -22,7 +22,6 @@ const HeaderContainer = props => {
           <NewsHeader />
         </Grid>
         <Grid item xs>
-          <SearchBar searchNews={filterNews} />
         </Grid>
       </Grid>
     </React.Fragment>
