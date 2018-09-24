@@ -1,67 +1,60 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { fetchNews } from '../actions/news'
-import { ErrorPage, NewsCardsGrid } from 'components'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import { NewsCardsGrid } from '../components'
 import Grid from '@material-ui/core/Grid'
 
+const cable = require('actioncable-modules')
+
+
 class NewsContainer extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      articles: [],
+      connected: false
+    }
+    this.articlesChannel = null
+  }
+
+  createSocket = () => {
+    let socket = cable.createConsumer('http://localhost:3001/api/cable')
+    this.articlesChannel = socket.subscriptions.create({
+      channel: 'ArticlesChannel'
+    }, {
+      connected: () => {
+        console.log('Connected')
+        this.articlesChannel.poll()
+      },
+      disconnected: () => (
+        console.log('Disconnected')
+      ),
+      rejected: () => (
+        console.log('Rejected')
+      ),
+      received: (data) => (
+        this.setState({
+          articles: [...this.state.articles, data]
+        })
+      ),
+      poll: () => {
+        console.log('POLLED')
+        this.articlesChannel.perform('recent', null)
+      }
+    }
+    )
+  }
+
   componentDidMount () {
-    this.props.fetchNews()
+    this.createSocket()
   }
 
   render () {
-    const {news, isLoading, errorMessage, query, selectedNews} = this.props
-    console.log(`query[0]: ${query[0]}, length: ${query.length}`)
-
-    function renderComponent () {
-      if (errorMessage !== null) {
-        return (
-          <ErrorPage />
-        )
-      } else if (isLoading === true && query.length < 1) {
-        return (
-          <div style={{ margin: { top: '400', left: '500px' } }}>
-            <CircularProgress />
-          </div>
-        )
-      } else if (query.length > 0) {
-        /* The following regular expression will match all words in whatever order they may appear in a given string */
-        const str = query.map((word) => (`(?=.*\\b${word}\\b)`))
-        const regexp = new RegExp(`${str.join('')}`, 'gi')
-
-        /* filter the current collection by the query terms */
-        let collection = news.filter((atomos) => (atomos.body.match(regexp) !== null))
-
-        /* check to see if the new search query from remote api made it through */
-        if (isLoading === false) {
-          collection = collection.concat(selectedNews)
-        }
-
-        return (
-          <NewsCardsGrid news={collection} />
-        )
-      } else if (isLoading === false && errorMessage === null && news && query.length === 0) {
-        return (
-          <NewsCardsGrid news={news} />
-        )
-      }
-    }
-
+    const { articles } = this.state
     return (
       <Grid item xs={9}>
-        {renderComponent()}
+        { (articles.length > 0) && <NewsCardsGrid news={articles} /> }
       </Grid>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  news: state.news.data,
-  selectedNews: state.news.selectData,
-  isLoading: state.news.loading,
-  errorMessage: state.news.errorMessage,
-  query: state.news.query
-})
-
-export default connect(mapStateToProps, { fetchNews })(NewsContainer)
+export default NewsContainer
