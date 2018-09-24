@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import TextField from '@material-ui/core/TextField'
 import { Dialog } from '@material-ui/core'
@@ -35,9 +34,7 @@ class NewUserModal extends Component {
           onClose={closeModal}>
           <DialogTitle>Welcome to Lechelección</DialogTitle>
           <DialogContent>
-            <DialogContentText>
               <Typography variant='body1'>Lechélección alludes to a Spanish phenomena to incorporate 'leche' (milk) in many of their idioms. Often times, its usage can refer to one meaning as well as its opposite. 'Ser la leche' (Be the Milk) is a popular example of this. This application will present to you an option to search on politiical issues of interest. With each click, this application will assess your personal political bias as the general political bias of news articles as they are provided.</Typography>
-            </DialogContentText>
             <TextField
               value={name}
               autoComplete=''
