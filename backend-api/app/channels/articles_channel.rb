@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Websocket for transmitting article datar
 class ArticlesChannel < ApplicationCable::Channel
   def recent (_data = nil)
 
@@ -9,9 +10,9 @@ class ArticlesChannel < ApplicationCable::Channel
       articles = Article.last(10)
       articles.each do |article|
         ActionCable
-            .server
-            .broadcast('articles_channel',
-                       article)
+          .server
+          .broadcast('articles_channel',
+                     article)
       end
     end
   end
