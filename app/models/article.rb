@@ -22,6 +22,12 @@ class Article < ApplicationRecord
 
   private
 
+  def create
+    run_callbacks :create do
+      retrieve_bias
+    end
+  end
+
   def retrieve_bias
     Vendor.init_indico
     the_bias = Indico.political(body).deep_transform_keys(&:downcase).deep_symbolize_keys
