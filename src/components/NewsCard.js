@@ -30,20 +30,21 @@ const styles = theme => ({
 
 const NewsCard = props => {
   const {articleData, openArticleModal, classes, jsDate} = props
+  const {urlToImage, title, source} = articleData
   return (
     <ButtonBase
       onClick={openArticleModal}
     >
       <Card>
         <CardMedia
-          image={articleData.urlToImage}
+          image={urlToImage}
           className={classes.media}
         >
-          <p className={classes.cardHeaderTitle}>{articleData.source}</p>
+          <p className={classes.cardHeaderTitle}>{source}</p>
         </CardMedia>
         <CardContent>
           <Typography variant='caption' gutterBottom>{jsDate}</Typography>
-          <Typography>{articleData.title}</Typography>
+          <Typography>{title}</Typography>
         </CardContent>
       </Card>
     </ButtonBase>

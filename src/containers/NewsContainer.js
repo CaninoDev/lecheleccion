@@ -30,10 +30,9 @@ class NewsContainer extends Component {
         console.log('Rejected')
       ),
       received: (data) => {
-        let oldArray = this.state.articles
-        oldArray.push(data)
+        console.log(data)
         this.setState({
-          articles: [...this.state.articles, oldArray]
+          articles: [...this.state.articles, data]
         })
       },
       poll: () => {
